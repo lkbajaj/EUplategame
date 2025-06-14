@@ -1,7 +1,7 @@
 # license plate class
 import random
 import string
-from plate_imager import create_swedish_plate, create_ukrainian_plate, create_romanian_plate
+from plate_imager import create_swedish_plate, create_ukrainian_plate, create_romanian_plate, create_estonian_plate
 
 def random_letter():
     return random.choice(string.ascii_uppercase)
@@ -91,3 +91,13 @@ class Romania(LicensePlate):
     def image_plate(self):
         create_romanian_plate(self.plate_number[0])
 
+# Estonia is another subclass of LicensePlate.
+# The most common Estonian license plate type is A1, which is comprised of three numbers, followed by a space, and three letters. Just like Sweden.
+class Estonia(LicensePlate):
+    def __init__(self):
+        country = 'Estonia',
+        plate_number = random_letter() + random_letter() + random_letter() + " " + random_number() + random_number() + random_number(),
+        super().__init__(plate_number,country)
+
+    def image_plate(self):
+        create_estonian_plate(self.plate_number[0][0])

@@ -53,3 +53,19 @@ def create_romanian_plate(number):
 
     image.save(f"plate-outputs/{number}-RO.png")
     image.show()
+
+# I could not find any information for what font Estonia uses for their plates.  From what it looks like, I would suspect they are using the DIN font too.
+def create_estonian_plate(number):
+    image = Image.open("plate-templates/estonia.png").convert('RGBA')
+    draw = ImageDraw.Draw(image)
+    font = ImageFont.truetype("fonts/DINMittelschriftStd.otf",size=180)
+
+    # text = number.replace(" ","  ")
+    position = (130,70)
+
+    color = 'black'
+
+    draw.text(position,number, font=font, fill=color)
+
+    image.save(f"plate-outputs/{number}-EST.png")
+    image.show()
