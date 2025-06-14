@@ -1,1 +1,4 @@
 __pycache__
+.venv
+plate-outputs/*.png
+.DS_Store
