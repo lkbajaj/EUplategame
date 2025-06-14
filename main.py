@@ -1,4 +1,4 @@
-from plate import LicensePlate, Sweden, Ukraine
+from plate import LicensePlate, Sweden, Ukraine, Romania
 
 # now here I can construct the Swedish plate and test it!
 
@@ -6,6 +6,11 @@ from plate import LicensePlate, Sweden, Ukraine
 # print(plate)
 # plate.image_plate()
 
-plate = Ukraine()
+# plate = Ukraine()
+# print(plate)
+# plate.image_plate()
+
+
+plate = Romania()
 print(plate)
 plate.image_plate()

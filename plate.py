@@ -1,7 +1,7 @@
 # license plate class
 import random
 import string
-from plate_imager import create_swedish_plate, create_ukrainian_plate
+from plate_imager import create_swedish_plate, create_ukrainian_plate, create_romanian_plate
 
 def random_letter():
     return random.choice(string.ascii_uppercase)
@@ -20,6 +20,27 @@ def ukranian_plate_gen():
     platenumber = random.choice(regionalcodes2013)
     platenumber = platenumber + " " + random_number() + random_number() + random_number() + random_number()
     platenumber = platenumber + " " + random.choice(legalchars) + random.choice(legalchars)
+    return platenumber
+
+# Like Ukraine, the first two letters are reserved for regional codes. The list can be found in https://en.wikipedia.org/wiki/Vehicle_registration_plates_of_Romania
+def romanian_plate_gen():
+    legalchars  = 'ABCDEFGHIJKLMNOPRSTUVWXYZ' # Q is not allowed since it may be confused with O
+    legalchars_start = 'ABCDEFGHJKLMNPRSTUVWXYZ' # may not start with I or O to avoid confusion with 1 and 0
+    regionalcodes = ['B','AB','AG','AR','BC','BH','BN','BR','BT','BV','BZ','CJ','CL','CS',
+                     'CT','CV','DB','DJ','GJ','GL','GR','HD','HR','IF','IL','IS','MH','NT',
+                     'OT','PH','SB','SJ','SM','SV','TL','TM','TR','VL','VN','VS']
+    
+    platenumber = random.choice(regionalcodes)
+    # if the plate is from Bucharest (code "B") then three numbers are used instead of the usual two
+    if platenumber == 'B':
+        platenumber = platenumber + " " + random_number() + random_number() + random_number()
+    else:
+        platenumber = platenumber + " " + random_number() + random_number() 
+    
+    platenumber = platenumber + " " + random.choice(legalchars_start) + random.choice(legalchars) + random.choice(legalchars)
+    while platenumber[-3:] == ('JEG' or 'BOU'): # JEG means crash in Romanian and BOU means dumb so they are not allowed
+        platenumber = platenumber[:-3] + random.choice(legalchars_start) + random.choice(legalchars) + random.choice(legalchars)
+    
     return platenumber
 
 class LicensePlate:
@@ -56,3 +77,17 @@ class Ukraine(LicensePlate):
 
     def image_plate(self):
         create_ukrainian_plate(self.plate_number[0])
+
+
+# Roamania is another subclass of LicensePlate.
+# Romanian plates are comprised of two letters, a space, two numbers, another space, and three letters. e.g: BN 18 CTL
+# https://en.wikipedia.org/wiki/Vehicle_registration_plates_of_Romania. 
+class Romania(LicensePlate):
+    def __init__(self):
+        country = 'Romania'
+        plate_number = romanian_plate_gen()
+        super().__init__(plate_number,country)
+
+    def image_plate(self):
+        create_romanian_plate(self.plate_number[0])
+

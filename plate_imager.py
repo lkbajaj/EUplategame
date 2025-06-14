@@ -1,5 +1,8 @@
 # from ChatGPT
 from PIL import Image, ImageDraw, ImageFont
+import random
+
+EV_CHANCE = 0.25 # chance of a given vehicle being an EV
 
 # example create a Swedish plate
 def create_swedish_plate(number):
@@ -30,4 +33,23 @@ def create_ukrainian_plate(number):
     draw.text(position,number, font=font, fill=color)
 
     image.save(f"plate-outputs/{number}-UA.png")
+    image.show()
+
+# according to Wikipedia, Romania like Sweden uses the DIN 1451 Mittelschrift font
+# https://en.wikipedia.org/wiki/Vehicle_registration_plates_of_Romania
+def create_romanian_plate(number):
+    image = Image.open("plate-templates/romania.png").convert('RGBA')
+    draw = ImageDraw.Draw(image)
+    font = ImageFont.truetype("fonts/DINMittelschriftStd.otf",size=140)
+
+    # text = number.replace(" ","  ")
+    position = (130,70)
+
+    color = 'black'
+    if random.random() < EV_CHANCE:
+        color = 'green'
+
+    draw.text(position,number, font=font, fill=color)
+
+    image.save(f"plate-outputs/{number}-RO.png")
     image.show()
