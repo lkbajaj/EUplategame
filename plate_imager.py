@@ -8,13 +8,13 @@ EV_CHANCE = 0.25 # chance of a given vehicle being an EV
 def create_swedish_plate(number):
     image = Image.open("plate-templates/sweden.png").convert('RGBA')
     draw = ImageDraw.Draw(image)
-    font = ImageFont.truetype("fonts/DINMittelschriftStd.otf",size=160)
+    font = ImageFont.truetype("fonts/DINMittelschriftStd.otf",size=170)
 
-    text = number.replace(" ","  ")
-    position = (150,60)
+    # text = number.replace(" ","  ")
+    position = (140,60)
     color = 'black'
 
-    draw.text(position, text, font=font, fill=color)
+    draw.text(position, number, font=font, fill=color)
 
     image.save(f"plate-outputs/{number}-SW.png")
     image.show()
@@ -22,12 +22,12 @@ def create_swedish_plate(number):
 # could not find a reputable source for what font Ukraine uses on their plates.
 # some Redditor mentioned that the closest font to it is Motor4F https://www.reddit.com/r/identifythisfont/comments/ug5e1o/hey_does_anyone_know_where_i_could_get_the/
 def create_ukrainian_plate(number):
-    image = Image.open("plate-templates/ukraine.png").convert('RGBA')
+    image = Image.open("plate-templates/ukrainelg.png").convert('RGBA')
     draw = ImageDraw.Draw(image)
-    font = ImageFont.truetype("fonts/Motor4F.otf",size=135)
+    font = ImageFont.truetype("fonts/Motor4F.otf",size=200)
 
     # text = number.replace(" ","  ")
-    position = (120,50)
+    position = (220,30)
     color = 'black'
 
     draw.text(position,number, font=font, fill=color)
@@ -38,12 +38,12 @@ def create_ukrainian_plate(number):
 # according to Wikipedia, Romania like Sweden uses the DIN 1451 Mittelschrift font
 # https://en.wikipedia.org/wiki/Vehicle_registration_plates_of_Romania
 def create_romanian_plate(number):
-    image = Image.open("plate-templates/romania.png").convert('RGBA')
+    image = Image.open("plate-templates/romanialg.png").convert('RGBA')
     draw = ImageDraw.Draw(image)
-    font = ImageFont.truetype("fonts/DINMittelschriftStd.otf",size=140)
+    font = ImageFont.truetype("fonts/DINMittelschriftStd.otf",size=200)
 
     # text = number.replace(" ","  ")
-    position = (130,70)
+    position = (240,70)
 
     color = 'black'
     if random.random() < EV_CHANCE:
