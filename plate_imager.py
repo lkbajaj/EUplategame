@@ -24,10 +24,10 @@ def create_ukrainian_plate(number):
     font = ImageFont.truetype("fonts/Motor4F.otf",size=135)
 
     # text = number.replace(" ","  ")
-    position = (130,60)
+    position = (120,50)
     color = 'black'
 
     draw.text(position,number, font=font, fill=color)
 
-    image.save(f"plate-outputs/{number}-UK.png")
+    image.save(f"plate-outputs/{number}-UA.png")
     image.show()
