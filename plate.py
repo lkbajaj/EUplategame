@@ -1,6 +1,7 @@
 # license plate class
 import random
 import string
+from plate_imager import create_swedish_plate
 
 def random_letter():
     return random.choice(string.ascii_uppercase)
@@ -9,10 +10,9 @@ def random_number():
     return str(random.randint(0,9))
 
 class LicensePlate:
-    def __init__(self,plate_number,country,font):
+    def __init__(self,plate_number,country):
         self.plate_number = plate_number,
         self.country = country,
-        self.font = font,
         self.vehicle = 'car' # making every vehicle a car for now. May add support to bikes in the future.
     
     # basic to-string method. Goal to create code that generates a picture of the plate eventually
@@ -25,6 +25,9 @@ class LicensePlate:
 class Sweden(LicensePlate):
     def __init__(self):
         country = 'Sweden' # duh
-        font = 'DIN 1451'
         plate_number = random_letter() + random_letter() + random_letter() + " " + random_number() + random_number() + random_number()
-        super().__init__(plate_number,country,font)
+        super().__init__(plate_number,country)
+
+    def image_plate(self):
+        create_swedish_plate(self.plate_number[0])
+
