@@ -3,7 +3,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 # example create a Swedish plate
 def create_swedish_plate(number):
-    image = Image.open("plate-templates/sweden-hq.png").convert('RGBA')
+    image = Image.open("plate-templates/sweden.png").convert('RGBA')
     draw = ImageDraw.Draw(image)
     font = ImageFont.truetype("fonts/DINMittelschriftStd.otf",size=160)
 
