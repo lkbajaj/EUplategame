@@ -25,3 +25,5 @@ def test_country_plateclass():
     country = estonianplate.country
     assert country_sw(country) == 'Estland'
 
+def test_unknown_country():
+    assert country_sw('Mali') is None
