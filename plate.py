@@ -45,8 +45,8 @@ def romanian_plate_gen():
 
 class LicensePlate:
     def __init__(self,plate_number,country):
-        self.plate_number = plate_number,
-        self.country = country,
+        self.plate_number = plate_number
+        self.country = country
         self.vehicle = 'car' # making every vehicle a car for now. May add support to bikes in the future.
     
     # basic to-string method. Goal to create code that generates a picture of the plate eventually
@@ -63,7 +63,7 @@ class Sweden(LicensePlate):
         super().__init__(plate_number,country)
 
     def image_plate(self):
-        create_swedish_plate(self.plate_number[0])
+        create_swedish_plate(self.plate_number)
 
 # Ukraine is another subclass of LicensePlate.
 # Ukranian plates are comprised of two letters, a space, four numbers, another space, and two letters e.g: AK 9265 AK
@@ -76,7 +76,7 @@ class Ukraine(LicensePlate):
         super().__init__(plate_number,country)
 
     def image_plate(self):
-        create_ukrainian_plate(self.plate_number[0])
+        create_ukrainian_plate(self.plate_number)
 
 
 # Roamania is another subclass of LicensePlate.
@@ -89,15 +89,15 @@ class Romania(LicensePlate):
         super().__init__(plate_number,country)
 
     def image_plate(self):
-        create_romanian_plate(self.plate_number[0])
+        create_romanian_plate(self.plate_number)
 
 # Estonia is another subclass of LicensePlate.
 # The most common Estonian license plate type is A1, which is comprised of three numbers, followed by a space, and three letters. Just like Sweden.
 class Estonia(LicensePlate):
     def __init__(self):
-        country = 'Estonia',
-        plate_number = random_letter() + random_letter() + random_letter() + " " + random_number() + random_number() + random_number(),
+        country = 'Estonia'
+        plate_number = random_letter() + random_letter() + random_letter() + " " + random_number() + random_number() + random_number()
         super().__init__(plate_number,country)
 
     def image_plate(self):
-        create_estonian_plate(self.plate_number[0][0])
+        create_estonian_plate(self.plate_number)
