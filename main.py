@@ -1,6 +1,5 @@
 from plate import LicensePlate, Sweden, Ukraine, Romania, Estonia
 
-
 counter = 1
 while True:
     if counter == 1:
