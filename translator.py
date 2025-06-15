@@ -14,11 +14,14 @@ def country_sw(country):
 
 # supports up to four digit numbers. May handle more in the future if necessary
 def number_sw(num):
+     # check if number is even an int
+    if not isinstance(num, int) or isinstance(num, bool):
+        return None
+    
     with open('swedish-translations/numbers.yaml') as file:
         data = yaml.safe_load(file)
     data = data['numbers']
-
-    num = int(num) # just to be safe
+    
     if num > 9999: # current limit. May extend for very long plates
         return None 
     elif num == 100:
