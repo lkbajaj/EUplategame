@@ -1,5 +1,6 @@
+# swedish translations for countries, courtesy of Google Maps. YAML files are like JSON but more human readable. Parsed by pyyaml 
 countries:
-  sweden: Sverige,
-  ukraine: Ukraina, 
-  estonia: Estland,
+  sweden: Sverige
+  ukraine: Ukraina 
+  estonia: Estland
   romania: Rumänien
