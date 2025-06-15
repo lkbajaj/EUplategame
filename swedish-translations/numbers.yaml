@@ -1,0 +1,30 @@
+# Swedish translations for numbers. I will parse numbers by starting at thousands, then doing hundreds, tens, and ones. 
+# Thankfully Swedish uses compound numbers. For example 536 is "fem hundra trettiosex."
+numbers:
+  thousands:
+    1000: tusen
+  hundreds: 
+    100: hundra
+  tens:
+    10: tio
+    11: elva
+    12: tolv
+    13: tretton
+    14: fjorton
+    15: femton
+    16: sexton
+    17: sjutton
+    18: arton
+    19: nitton
+    20: tjugo
+    30: trettio
+  ones:
+    1: ett
+    2: två
+    3: tre
+    4: fyra
+    5: fem
+    6: sex
+    7: sju
+    8: åtta
+    9: nio

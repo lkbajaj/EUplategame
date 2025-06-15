@@ -11,7 +11,3 @@ def country_sw(country):
         return None 
      
     return data[country]
-
-print(country_sw('Sweden'))
-print(country_sw('sweden'))
-print(country_sw('belarus'))
