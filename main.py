@@ -11,8 +11,9 @@ while True:
     elif counter == 4:
         plate = Estonia()
     
-    print(plate)
-    plate.image_plate()
+    # print(plate)
+    # plate.image_plate()
+    print(plate.dict_sw())
 
     counter += 1
     if counter > 4:

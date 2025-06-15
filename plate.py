@@ -2,6 +2,7 @@
 import random
 import string
 from plate_imager import create_swedish_plate, create_ukrainian_plate, create_romanian_plate, create_estonian_plate
+from translator import country_sw, number_sw
 
 def random_letter():
     return random.choice(string.ascii_uppercase)
@@ -53,6 +54,10 @@ class LicensePlate:
     def __str__(self):
         return (f'number: {self.plate_number},country:{self.country},vehicle:{self.vehicle}')
     
+    # dict of all properties translated to Swedish. On every country to implement different translations
+    def dict_sw(self):
+        return {}
+    
 # Sweden is a subclass of LicensePlate. I have included a constructor method for this purpose.
 # Swedish plates are comprised of three letters a space and three numbers e.g: WNF 864.
 # They also use the DIN 1451 font https://en.wikipedia.org/wiki/DIN_1451.
@@ -64,6 +69,12 @@ class Sweden(LicensePlate):
 
     def image_plate(self):
         create_swedish_plate(self.plate_number)
+
+    def dict_sw(self):
+        countrySW = country_sw(self.country)
+        numberSW = self.plate_number[0:4] + number_sw(int(self.plate_number[4:]))
+        return {'country':countrySW,
+                'number':numberSW}
 
 # Ukraine is another subclass of LicensePlate.
 # Ukranian plates are comprised of two letters, a space, four numbers, another space, and two letters e.g: AK 9265 AK
@@ -77,6 +88,12 @@ class Ukraine(LicensePlate):
 
     def image_plate(self):
         create_ukrainian_plate(self.plate_number)
+    
+    def dict_sw(self):
+        countrySW = country_sw(self.country)
+        numberSW = self.plate_number[0:3] + number_sw(int(self.plate_number[3:6])) + self.plate_number[7:]
+        return {'country':countrySW,
+                'number':numberSW}  
 
 
 # Roamania is another subclass of LicensePlate.
@@ -90,6 +107,15 @@ class Romania(LicensePlate):
 
     def image_plate(self):
         create_romanian_plate(self.plate_number)
+    
+    def dict_sw(self):
+        countrySW = country_sw(self.country)
+        numarrays = self.plate_number.split()
+        numberSW = numarrays[0] + ' ' + number_sw(int(numarrays[1])) + ' ' + numarrays[2]
+        return {'country':countrySW,
+                'number':numberSW}
+
+
 
 # Estonia is another subclass of LicensePlate.
 # The most common Estonian license plate type is A1, which is comprised of three numbers, followed by a space, and three letters. Just like Sweden.
@@ -101,3 +127,9 @@ class Estonia(LicensePlate):
 
     def image_plate(self):
         create_estonian_plate(self.plate_number)
+
+    def dict_sw(self): 
+        countrySW = country_sw(self.country)
+        numberSW = self.plate_number[0:4] + number_sw(int(self.plate_number[4:]))
+        return {'country': countrySW,
+                'number': numberSW}
