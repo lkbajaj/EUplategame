@@ -2,3 +2,6 @@ __pycache__
 .venv
 plate-outputs/*.png
 .DS_Store
+tests/.pytest_cache
+.vscode 
+.pytest_cache
