@@ -3,3 +3,5 @@ __pycache__
 plate-outputs/*.png
 .DS_Store
 tests/.pytest_cache
+.vscode 
+.pytest_cache
