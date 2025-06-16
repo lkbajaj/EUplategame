@@ -1,7 +1,7 @@
 # license plate class
 import random
 import string
-from plate_imager import create_swedish_plate, create_ukrainian_plate, create_romanian_plate, create_estonian_plate
+from plate_imager import create_swedish_plate, create_ukrainian_plate, create_romanian_plate, create_estonian_plate, create_bulgarian_plate
 from translator import country_sw, number_sw
 
 def random_letter():
@@ -43,6 +43,29 @@ def romanian_plate_gen():
         platenumber = platenumber[:-3] + random.choice(legalchars_start) + random.choice(legalchars) + random.choice(legalchars)
     
     return platenumber
+
+# Like other countries whose main language uses the Cyrillic alphabet (Ukraine) only a subset of characters in both cyrllic and latin letters are adopted
+# For Bulgaria it is А, В, Е, К, М, Н, О, Р, С, Т, У, Х. I am using a custom font though from /u/Marijanovic on reddit that uses a Y instead of the cyrllic counterpart
+# The series (last two letters) only uses nine letters (no E,O,Y) https://en.wikipedia.org/wiki/Vehicle_registration_plates_of_Bulgaria
+def bulgarian_plate_gen():
+    serieschars = 'ABKMHPCTX'
+    serieschars_sofia = 'ABEKMHPCTX' # until 2023 E was only reserved for cars in Sofia
+
+    provincecodes = ['A','B','BH','BP','E','EB','EH','K','M','H','OB',
+                     'P','PA','PB','PK','PP','C','CA','CB','CH','CM',
+                     'CO','CC','CT','T','TX','Y','X']
+    
+    provincecode = random.choice(provincecodes)
+    series = ''
+    if provincecode in ['C','CA','CB']: # this car is registered in Sofia
+        series = series + random.choice(serieschars_sofia) + random.choice(serieschars_sofia)
+        while series == 'EE': # this is reserved for trailers and caravans
+            series = '' + random.choice(serieschars_sofia) + random.choice(serieschars_sofia)
+    else:
+        series = series + random.choice(serieschars) + random.choice(serieschars)
+    
+    return provincecode +  ' ' + random_number() + random_number() + random_number() + random_number() + ' ' + series
+
 
 class LicensePlate:
     def __init__(self,plate_number,country):
@@ -131,5 +154,26 @@ class Estonia(LicensePlate):
     def dict_sw(self): 
         countrySW = country_sw(self.country)
         numberSW = self.plate_number[0:4] + number_sw(int(self.plate_number[4:]))
+        return {'country': countrySW,
+                'number': numberSW}
+    
+# Bulgaria is another subclass of LicensePlate.
+# Bulgarian plates have a one to two letter regional code, followed by a four digit serial number, and a two letter code called a series
+# https://en.wikipedia.org/wiki/Vehicle_registration_plates_of_Bulgaria
+
+class Bulgaria(LicensePlate):
+    def __init__(self):
+        country = 'Bulgaria'
+        plate_number = bulgarian_plate_gen()
+        super().__init__(plate_number,country)
+    
+    def image_plate(self):
+        create_bulgarian_plate(self.plate_number)
+    
+    def dict_sw(self):
+        countrySW = country_sw(self.country)
+        # print(countrySW)
+        numarrays =  self.plate_number.split()
+        numberSW = numarrays[0] + ' ' + number_sw(int(numarrays[1])) + ' ' + numarrays[2]
         return {'country': countrySW,
                 'number': numberSW}

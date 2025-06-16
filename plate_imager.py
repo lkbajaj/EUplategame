@@ -19,6 +19,8 @@ def back_matter(plate_number,dictsw):
     if country.lower() in smallplate_countries:
         width = SMALLPLATE_WIDTH
         size = 40
+    elif country.lower() == 'bulgarien': # bulgaria is very big
+        size = 50
     
     image = Image.new('RGB', (width,height), color = 'white')
     draw = ImageDraw.Draw(image)
@@ -101,3 +103,17 @@ def create_estonian_plate(number):
 
     image.save(f"plate-outputs/{number}-front.png")
     # image.show()
+
+def create_bulgarian_plate(number):
+    image = Image.open("plate-templates/bulgaria.png").convert('RGBA')
+    draw = ImageDraw.Draw(image)
+    font = ImageFont.truetype("fonts/Bulgarianmarijanovic-Regular.ttf",size=200)
+
+    # text = number.replace(" ","  ")
+    position = (200,60)
+
+    color = 'black'
+    draw.text(position,number, font=font, fill=color)
+
+    image.save(f"plate-outputs/{number}-front.png")
+

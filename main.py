@@ -1,4 +1,4 @@
-from plate import LicensePlate, Sweden, Ukraine, Romania, Estonia
+from plate import LicensePlate, Sweden, Ukraine, Romania, Estonia, Bulgaria
 import tkinter as tk
 from plate_imager import back_matter
 from PIL import Image, ImageTk
@@ -28,8 +28,9 @@ label.pack()
 
 # internal logic to creating images of plates
 def generate_plate():
-    countries = ['Sweden','Ukraine','Estonia','Romania']
+    countries = ['Sweden','Ukraine','Estonia','Romania','Bulgaria']
     country = random.choice(countries)
+    # country = 'Bulgaria'
 
     plate = None
     if country == 'Sweden':
@@ -38,8 +39,10 @@ def generate_plate():
         plate = Ukraine()
     elif country == 'Estonia':
         plate = Estonia()
-    else:
+    elif country == 'Romania':
         plate = Romania()
+    else:
+        plate = Bulgaria()
 
     plate.image_plate()
     dictsw = plate.dict_sw()
