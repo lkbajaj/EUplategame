@@ -7,7 +7,8 @@ import os
 
 
 # remove previous files before running if they exist
-directory = "/Users/leynabajaj/Documents/coding-projects/EUplategame/plate-outputs"
+current_dir = os.getcwd()
+directory = f"{current_dir}/plate-outputs"
 for filename in os.listdir(directory):
     file_path = os.path.join(directory, filename)
     if filename.lower().endswith('.png'):
