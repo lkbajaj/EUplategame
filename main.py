@@ -29,7 +29,7 @@ label.pack()
 
 # internal logic to creating images of plates
 def generate_plate():
-    countries = ['Sweden','Ukraine','Estonia','Romania','Bulgaria']
+    countries = ['Sweden','Ukraine','Estonia','Romania','Bulgaria','Malta','Bosnia']
     country = random.choice(countries)
 
     plate = None
