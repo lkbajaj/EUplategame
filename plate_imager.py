@@ -21,6 +21,8 @@ def back_matter(plate_number,dictsw):
         size = 40
     elif country.lower() == 'bulgarien': # bulgaria is very big
         size = 50
+    elif country.lower() == 'bosnien och hercegovina':
+        size = 50
     
     image = Image.new('RGB', (width,height), color = 'white')
     draw = ImageDraw.Draw(image)
@@ -116,4 +118,21 @@ def create_bulgarian_plate(number):
     draw.text(position,number, font=font, fill=color)
 
     image.save(f"plate-outputs/{number}-front.png")
+
+# bosnian plates use the FE-Schrift font, as seen by the white line in the 0 
+# https://en.wikipedia.org/wiki/European_vehicle_registration_plate#/media/File:License_plate_Bosnia_and_Herzegowina_2009.jpg
+
+def create_bosnian_plate(number):
+    image = Image.open("plate-templates/bosnia.png").convert('RGBA')
+    draw = ImageDraw.Draw(image)
+    font = ImageFont.truetype("fonts/FE-FONT.TTF",size=180)
+
+    # text = number.replace(" ","  ")
+    position = (140,30)
+    color = 'black'
+
+    draw.text(position,number, font=font, fill=color)
+
+    image.save(f"plate-outputs/{number}-front.png")
+    
 

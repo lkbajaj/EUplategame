@@ -1,7 +1,7 @@
 # license plate class
 import random
 import string
-from plate_imager import create_swedish_plate, create_ukrainian_plate, create_romanian_plate, create_estonian_plate, create_bulgarian_plate
+from plate_imager import create_swedish_plate, create_ukrainian_plate, create_romanian_plate, create_estonian_plate, create_bulgarian_plate, create_bosnian_plate
 from translator import country_sw, number_sw
 
 def random_letter():
@@ -175,5 +175,30 @@ class Bulgaria(LicensePlate):
         # print(countrySW)
         numarrays =  self.plate_number.split()
         numberSW = numarrays[0] + ' ' + number_sw(int(numarrays[1])) + ' ' + numarrays[2]
+        return {'country': countrySW,
+                'number': numberSW}
+    
+# Bosnia and Herzegovina (referred to as Bosnia for simplicity hereonafter) is another subclass of LicensePlate
+# Bosnian plates have five numbers and two letters in the order "X00-X-000". There are no regional codes.
+#  https://en.wikipedia.org/wiki/Vehicle_registration_plates_of_Bosnia_and_Herzegovina
+
+class Bosnia(LicensePlate):
+    def __init__(self):
+        country = 'Bosnia'
+        legalchars = 'AEOJKMT' # only characters represented wqually in Latin and Cyrillic script are used
+        plate_number = (
+            random.choice(legalchars) + random_number() + random_number() + '-' +
+            random.choice(legalchars) + '-' + random_number() + random_number() + random_number()
+        )
+        
+        super().__init__(plate_number, country)
+    
+    def image_plate(self):
+        create_bosnian_plate(self.plate_number)
+    
+    def dict_sw(self):
+        countrySW = country_sw(self.country)
+        numarrays = self.plate_number.split('-')
+        numberSW = numarrays[0][0] + ' ' + number_sw(int(numarrays[0][1:])) + ' ' + numarrays[1] + ' ' + number_sw(int(numarrays[2]))
         return {'country': countrySW,
                 'number': numberSW}

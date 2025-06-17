@@ -43,6 +43,7 @@ def test_number_tens():
     assert number_sw(14) == 'fjorton'
     assert number_sw(50) == 'femtio'
     assert number_sw(70) == 'sjuttio'
+    assert number_sw(int('060')) == 'sextio'
 
 def test_number_hundreds():
     assert number_sw(100) == 'hundra'
