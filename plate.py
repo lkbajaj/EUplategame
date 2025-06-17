@@ -1,7 +1,11 @@
 # license plate class
 import random
 import string
-from plate_imager import create_swedish_plate, create_ukrainian_plate, create_romanian_plate, create_estonian_plate, create_bulgarian_plate, create_bosnian_plate
+from plate_imager import (
+    create_swedish_plate, create_ukrainian_plate, create_romanian_plate, 
+    create_estonian_plate, create_bulgarian_plate, create_bosnian_plate,
+    create_maltese_plate
+)
 from translator import country_sw, number_sw
 
 def random_letter():
@@ -66,6 +70,34 @@ def bulgarian_plate_gen():
     
     return provincecode +  ' ' + random_number() + random_number() + random_number() + random_number() + ' ' + series
 
+# Maltese plates use latin characters with no restrictions from A-Z in the three letter, three number system (ZZZ 999)
+# https://en.wikipedia.org/wiki/Vehicle_registration_plates_of_Malta
+# For privately owned vehicles the first
+def maltese_plate_gen():
+    SPECIAL_NUMBER_PROB = 0.05
+    if random.random() < SPECIAL_NUMBER_PROB:
+        # inspired by https://en.wikipedia.org/wiki/Vehicle_registration_plates_of_Malta
+        special_numbers = ['TAXI','TR','POSTA','GVP','BUS','GVX']
+        numberchoice = random.choice(special_numbers)
+        if numberchoice == 'TAXI':
+            MG = 'MG'
+            return 'TAXI ' + random_number() + random_number() +  random.choice(MG)
+        if numberchoice == 'TR':
+            return 'TR ' + random_number() + random_number() + random_number() + random_number()
+        if numberchoice == 'POSTA': 
+            numberchoice = numberchoice + ' '
+            numi = random.randint(1,4)
+            for i in range(numi):
+                numberchoice = numberchoice + random_number()
+            
+            return numberchoice
+
+        return numberchoice + ' ' + random_number() + random_number() + random_number()
+    
+    return (
+        random_letter() + random_letter() + random_letter() + ' ' +
+        random_number() + random_number() + random_number()
+    )
 
 class LicensePlate:
     def __init__(self,plate_number,country):
@@ -200,5 +232,34 @@ class Bosnia(LicensePlate):
         countrySW = country_sw(self.country)
         numarrays = self.plate_number.split('-')
         numberSW = numarrays[0][0] + ' ' + number_sw(int(numarrays[0][1:])) + ' ' + numarrays[1] + ' ' + number_sw(int(numarrays[2]))
+        return {'country': countrySW,
+                'number': numberSW}
+    
+# Malta is a subclass of LicensePlate.
+# Maltese plates have three letters and three numbers (ZZZ 999). There are no regional codes.
+# https://en.wikipedia.org/wiki/Vehicle_registration_plates_of_Malta
+
+class Malta(LicensePlate):
+    def __init__(self):
+        country = 'Malta'
+        plate_number = maltese_plate_gen()
+
+        super().__init__(plate_number, country)
+    
+    def image_plate(self):
+        create_maltese_plate(self.plate_number)
+    
+    def dict_sw(self):
+        countrySW = country_sw(self.country)
+        numarrays = self.plate_number.split()
+
+        numberSW = ''
+        if numarrays[0] == 'TAXI':
+            numberSW = numarrays[0] + ' ' +  number_sw(int(numarrays[1][:-1])) + ' ' + numarrays[-1]
+            return {'country': countrySW,
+                    'number': numberSW}
+        
+        numberSW = numarrays[0] + ' ' + number_sw(int(numarrays[1]))
+
         return {'country': countrySW,
                 'number': numberSW}
