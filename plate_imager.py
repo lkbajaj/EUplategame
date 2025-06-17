@@ -19,6 +19,10 @@ def back_matter(plate_number,dictsw):
     if country.lower() in smallplate_countries:
         width = SMALLPLATE_WIDTH
         size = 40
+    elif country.lower() == 'bulgarien': # bulgaria is very big
+        size = 50
+    elif country.lower() == 'bosnien och hercegovina':
+        size = 50
     
     image = Image.new('RGB', (width,height), color = 'white')
     draw = ImageDraw.Draw(image)
@@ -101,3 +105,54 @@ def create_estonian_plate(number):
 
     image.save(f"plate-outputs/{number}-front.png")
     # image.show()
+
+def create_bulgarian_plate(number):
+    image = Image.open("plate-templates/bulgaria.png").convert('RGBA')
+    draw = ImageDraw.Draw(image)
+    font = ImageFont.truetype("fonts/Bulgarianmarijanovic-Regular.ttf",size=200)
+
+    # text = number.replace(" ","  ")
+    position = (200,60)
+
+    color = 'black'
+    draw.text(position,number, font=font, fill=color)
+
+    image.save(f"plate-outputs/{number}-front.png")
+
+# Bosnian plates use the FE-Schrift font, as seen by the white line in the 0 
+# https://en.wikipedia.org/wiki/European_vehicle_registration_plate#/media/File:License_plate_Bosnia_and_Herzegowina_2009.jpg
+
+def create_bosnian_plate(number):
+    image = Image.open("plate-templates/bosnia.png").convert('RGBA')
+    draw = ImageDraw.Draw(image)
+    font = ImageFont.truetype("fonts/FE-FONT.TTF",size=180)
+
+    # text = number.replace(" ","  ")
+    position = (140,30)
+    color = 'black'
+
+    draw.text(position,number, font=font, fill=color)
+
+    image.save(f"plate-outputs/{number}-front.png")
+
+# Maltese plates use FE-Schrift too
+def create_maltese_plate(number):
+    image = Image.open("plate-templates/malta.png").convert('RGBA')
+    draw = ImageDraw.Draw(image)
+    font = ImageFont.truetype("fonts/FE-FONT.TTF",size=200)
+
+    # text = number.replace(" ","  ")
+    position = (220,30)
+    if (number.split())[0] == 'TAXI':
+        position = (160,30)
+    elif (number.split())[0] == 'POSTA':
+        position = (160,50)
+        font = ImageFont.truetype("fonts/FE-FONT.TTF",size=170)
+    color = 'black'
+
+    draw.text(position,number, font=font, fill=color)
+
+    image.save(f"plate-outputs/{number}-front.png")
+
+    
+
