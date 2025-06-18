@@ -154,5 +154,16 @@ def create_maltese_plate(number):
 
     image.save(f"plate-outputs/{number}-front.png")
 
-    
 
+# Belgian plates have dark red text (#882329). They use a unique font that I do not want to pay for. The closest thing to it is  DIN1451
+def create_belgian_plate(number):
+    image = Image.open("plate-templates/belgium.png").convert('RGBA')
+    draw = ImageDraw.Draw(image)
+    font = ImageFont.truetype("fonts/DINMittelschriftStd.otf",size=220)
+
+    position = (180,50)
+    color = '#882329'
+
+    draw.text(position,number, font=font, fill=color)
+
+    image.save(f"plate-outputs/{number}-front.png")

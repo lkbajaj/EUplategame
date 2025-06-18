@@ -4,7 +4,7 @@ import string
 from plate_imager import (
     create_swedish_plate, create_ukrainian_plate, create_romanian_plate, 
     create_estonian_plate, create_bulgarian_plate, create_bosnian_plate,
-    create_maltese_plate
+    create_maltese_plate, create_belgian_plate
 )
 from translator import country_sw, number_sw
 from plate_gen import (
@@ -180,5 +180,29 @@ class Malta(LicensePlate):
         
         numberSW = numarrays[0] + ' ' + number_sw(int(numarrays[1]))
 
+        return {'country': countrySW,
+                'number': numberSW}
+
+
+# Belgium is a subclass of LicensePlate
+# Limited information for Belgian plates. They use the combination 0-XXX-000
+class Belgium(LicensePlate):
+    def __init__(self):
+        country = 'Belgium'
+        plate_number = (
+                        random_number() + '-' + random_letter() + random_letter() + random_letter() + '-' +
+                        random_number() + random_number() + random_number()
+                       )   
+        
+        super().__init__(plate_number,country)
+    
+    def image_plate(self):
+        create_belgian_plate(self.plate_number)
+    
+    def dict_sw(self):
+        countrySW = country_sw(self.country)
+        numarrays = self.plate_number.split('-')
+
+        numberSW = number_sw(int(numarrays[0])) + ' ' + numarrays[1] + ' ' + number_sw(int(numarrays[2]))
         return {'country': countrySW,
                 'number': numberSW}

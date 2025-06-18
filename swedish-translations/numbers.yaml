@@ -25,6 +25,7 @@ numbers:
     80: åttio
     90: nittio
   ones:
+    0: noll
     1: ett
     2: två
     3: tre
