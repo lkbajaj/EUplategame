@@ -52,7 +52,7 @@ def generate_plate():
 
     plate = plate_options[country]()
     plate.image_plate()
-    dictsw = plate.dict_sw()
+    dictsw = plate.dictsw
     plate_number = plate.plate_number
     back_matter(plate_number,dictsw)
     plate_numbers.append(plate_number)
