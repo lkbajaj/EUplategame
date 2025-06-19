@@ -118,3 +118,15 @@ def slovakian_plate_gen():
 
     return district + ' ' + random_number() + random_number() + random_number() + random_letter() + random_letter()
 
+# Cypriate plates have 3 letters a space and 3 numbers. 
+# The three letters follow a sequence from AAA, AAB, ..., ZZZ. Since the introduction,
+# of new plates in 2013 the sequence started at M. 
+# Only the following letters are used: ABEHKMNPTXYZ.  https://en.wikipedia.org/wiki/Vehicle_registration_plates_of_Cyprus
+def cypriot_plate_gen():
+    legalchars = 'ABEHKMNPTXYZ'
+    legalchars_beg = 'MNPTXYZ'
+
+    return (
+        random.choice(legalchars_beg) + random.choice(legalchars) + random.choice(legalchars) + ' ' 
+        + random_number() + random_number() + random_number()
+    )

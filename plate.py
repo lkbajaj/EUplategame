@@ -5,12 +5,13 @@ from plate_imager import (
     create_swedish_plate, create_ukrainian_plate, create_romanian_plate, 
     create_estonian_plate, create_bulgarian_plate, create_bosnian_plate,
     create_maltese_plate, create_belgian_plate, create_spanish_plate,
-    create_slovakian_plate
+    create_slovakian_plate, create_cypriot_plate
 )
 from translator import country_sw, number_sw
 from plate_gen import (
     ukranian_plate_gen, romanian_plate_gen, bulgarian_plate_gen,
-    maltese_plate_gen, spanish_plate_gen, slovakian_plate_gen
+    maltese_plate_gen, spanish_plate_gen, slovakian_plate_gen,
+    cypriot_plate_gen
 )
 
 def random_letter():
@@ -249,3 +250,29 @@ class Slovakia(LicensePlate):
 
         return {'country':countrySW,
                 'number':numberSW}
+    
+
+# Cyprus is a subclass of LicensePlate
+# Cypriate plates use a XXX 000 format where XXX follows a AAA -> ZZZ sequence. 
+# https://en.wikipedia.org/wiki/Vehicle_registration_plates_of_Cyprus
+class Cyprus(LicensePlate):
+    def __init__(self):
+        country = 'Cyprus'
+        plate_number = cypriot_plate_gen()
+
+        super().__init__(plate_number,country)
+    
+    def image_plate(self):
+        create_cypriot_plate(self.plate_number)
+
+    def dict_sw(self):
+        countrySW = country_sw(self.country)
+        numarrays = self.plate_number.split()
+        numberSW = numarrays[0] + ' ' + number_sw(int(numarrays[1])) 
+
+        return {'country':countrySW,
+                'number':numberSW}
+    
+
+    
+    
