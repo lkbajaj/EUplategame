@@ -18,6 +18,9 @@ def number_sw(num):
     if not isinstance(num, int) or isinstance(num, bool):
         return None
     
+    if num == 0:
+        return 'noll'
+    
     with open('swedish-translations/numbers.yaml') as file:
         data = yaml.safe_load(file)
     data = data['numbers']

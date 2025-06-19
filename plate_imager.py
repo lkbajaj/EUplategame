@@ -1,6 +1,7 @@
 # from ChatGPT
 from PIL import Image, ImageDraw, ImageFont
 import random
+import datetime 
 
 EV_CHANCE = 0.25 # chance of a given vehicle being an EV
 PLATE_HEIGHT = 250 # height in pixels
@@ -19,9 +20,7 @@ def back_matter(plate_number,dictsw):
     if country.lower() in smallplate_countries:
         width = SMALLPLATE_WIDTH
         size = 40
-    elif country.lower() == 'bulgarien': # bulgaria is very big
-        size = 50
-    elif country.lower() == 'bosnien och hercegovina':
+    elif country.lower() in ['bulgarien','bosnien och hercegovina','spanien']: # bulgaria is very big
         size = 50
     
     image = Image.new('RGB', (width,height), color = 'white')
@@ -154,5 +153,73 @@ def create_maltese_plate(number):
 
     image.save(f"plate-outputs/{number}-front.png")
 
-    
 
+# Belgian plates have dark red text (#882329). They use a unique font that I do not want to pay for. The closest thing to it is  DIN1451
+def create_belgian_plate(number):
+    image = Image.open("plate-templates/belgium.png").convert('RGBA')
+    draw = ImageDraw.Draw(image)
+    font = ImageFont.truetype("fonts/DINMittelschriftStd.otf",size=220)
+
+    position = (180,50)
+    color = '#882329'
+
+    draw.text(position,number, font=font, fill=color)
+
+    image.save(f"plate-outputs/{number}-front.png")
+
+# Spain uses a font similar to DIN 1451: https://www.leewardpro.com/articles/licplatefonts/licplate-fonts-eur-2.html#:~:text=Spain,is%20modeled%20after%20DIN%201451.
+def create_spanish_plate(number):
+    image = Image.open("plate-templates/spain.png").convert('RGBA')
+    draw = ImageDraw.Draw(image)
+    font = ImageFont.truetype("fonts/DINMittelschriftStd.otf",size=220)
+
+    position = (230,50)
+    color = 'black'
+
+    draw.text(position,number, font=font, fill=color)
+
+    image.save(f"plate-outputs/{number}-front.png")
+
+
+# Slovakia uses its own font that I am using a copy developed by /u/Marijanovic on Reddit.
+# The Slovakian plates have a seal of the country after the provincial code
+def create_slovakian_plate(number):
+    image = Image.open('plate-templates/slovakia.png').convert('RGBA')
+    draw = ImageDraw.Draw(image)
+    font = ImageFont.truetype('fonts/slovakiaMarijanovic.ttf',size=220)
+    
+    position = (180,40)
+    color = 'black'
+    draw.text(position,number.split()[0],font=font,fill=color) # province code
+
+    position = (530,40)
+    draw.text(position,number.split()[1],font=font,fill=color) # remaining code
+    
+    image.save(f'plate-outputs/{number}-front.png')
+
+# Cyprus uses FE SCHRIFT. They also have the registration date on the plate in DIN font.
+# Since the new series of plates started in 2013 I will make the year from 2013-2025
+def create_cypriot_plate(number):
+    image = Image.open("plate-templates/cyprus.png").convert('RGBA')
+    draw = ImageDraw.Draw(image)
+    font = ImageFont.truetype("fonts/FE-FONT.TTF",size=200)
+
+    numbertemp = number.replace(' ','  ')
+
+    position = (180,30)
+    color = 'black'
+
+    draw.text(position,numbertemp, font=font, fill=color)
+
+    month = str(random.randint(1,12))
+    if len(month) == 1:
+        month = '0' + month
+    
+    year = random.randint(13,int(str(datetime.datetime.now().year)[-2:])) 
+    registration_text = month + '\n'+ str(year)
+    position = (680,120)
+    font = ImageFont.truetype("fonts/FE-FONT.TTF",size=50)
+    draw.text(position,registration_text, font=font, fill=color)
+
+
+    image.save(f"plate-outputs/{number}-front.png")
