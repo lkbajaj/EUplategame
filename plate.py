@@ -4,12 +4,13 @@ import string
 from plate_imager import (
     create_swedish_plate, create_ukrainian_plate, create_romanian_plate, 
     create_estonian_plate, create_bulgarian_plate, create_bosnian_plate,
-    create_maltese_plate, create_belgian_plate, create_spanish_plate
+    create_maltese_plate, create_belgian_plate, create_spanish_plate,
+    create_slovakian_plate
 )
 from translator import country_sw, number_sw
 from plate_gen import (
     ukranian_plate_gen, romanian_plate_gen, bulgarian_plate_gen,
-    maltese_plate_gen, spanish_plate_gen
+    maltese_plate_gen, spanish_plate_gen, slovakian_plate_gen
 )
 
 def random_letter():
@@ -226,3 +227,25 @@ class Spain(LicensePlate):
 
         return {'country':countrySW,
                 'number': numberSW}
+
+# Slovakia is a subclass of LicensePlate
+# the format is XX  000XX where the first two letters are a district code and per district
+# the sequence goes from AA -> ZZ. The only district to have gotten to ZZ as of now is Bratislava, however,
+# for the purpose of this exercise we will make the last two letters random.
+class Slovakia(LicensePlate):
+    def __init__(self):
+        country = 'Slovakia'
+        plate_number = slovakian_plate_gen()
+
+        super().__init__(plate_number,country)
+
+    def image_plate(self):
+        create_slovakian_plate(self.plate_number)
+    
+    def dict_sw(self):
+        countrySW = country_sw(self.country)
+        numarrays = self.plate_number.split(' ')
+        numberSW = numarrays[0] + ' ' + number_sw(int(numarrays[1][0:3])) + ' ' + numarrays[1][3:]
+
+        return {'country':countrySW,
+                'number':numberSW}

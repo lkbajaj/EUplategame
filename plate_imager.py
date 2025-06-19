@@ -178,3 +178,20 @@ def create_spanish_plate(number):
     draw.text(position,number, font=font, fill=color)
 
     image.save(f"plate-outputs/{number}-front.png")
+
+
+# Slovakia uses its own font that I am using a copy developed by /u/Marijanovic on Reddit.
+# The Slovakian plates have a seal of the country after the provincial code
+def create_slovakian_plate(number):
+    image = Image.open('plate-templates/slovakia.png').convert('RGBA')
+    draw = ImageDraw.Draw(image)
+    font = ImageFont.truetype('fonts/slovakiaMarijanovic.ttf',size=220)
+    
+    position = (180,40)
+    color = 'black'
+    draw.text(position,number.split()[0],font=font,fill=color) # province code
+
+    position = (530,40)
+    draw.text(position,number.split()[1],font=font,fill=color) # remaining code
+    
+    image.save(f'plate-outputs/{number}-front.png')

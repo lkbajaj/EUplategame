@@ -104,3 +104,17 @@ def spanish_plate_gen():
         random.choice(legalchars_beg) + random.choice(legalchars) + random.choice(legalchars)
     )
 
+# Slovakian plates do the XX NNNXX where the first two letters are a provinicial code and the last two letters
+# correspond to the a series from AA -> ZZ
+def slovakian_plate_gen():
+    district_codes = ['BA','BD','BE','BI','BL','BT','BB','BC','BK','BJ','BN','BR','BS','BY','CA',
+                      'CA','DK','DS','DT','GA','GL','HC','HE','IL','KA','KE','KC','KI','KK','KM',
+                      'KN','KS','LC','LE','LM','LV','LL','MA','MI','ML','LV','LL','MA','MI','ML',
+                      'MT','MY','NR','NI','NT','NM','NO','NZ','NC','PB','PD','PE','PK','PN','PO',
+                      'PV','PS','PP','PT','PU','RA','RK','RS','RV','SA','SB','SC','SE','SI','SK',
+                      'SL','SN','SO','SP','SV','TT','TA','TB','TN','TC','TE','TO','TR','TS','TS',
+                      'TV','VK','VT','ZA','ZI','ZL','ZC','ZH','ZM','ZV']
+    district = random.choice(district_codes)
+
+    return district + ' ' + random_number() + random_number() + random_number() + random_letter() + random_letter()
+
