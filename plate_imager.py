@@ -20,7 +20,7 @@ def back_matter(plate_number,dictsw):
     if country.lower() in smallplate_countries:
         width = SMALLPLATE_WIDTH
         size = 40
-    elif country.lower() in ['bulgarien','bosnien och hercegovina','spanien']: # bulgaria is very big
+    elif country.lower() in ['bulgarien','bosnien och hercegovina','spanien','ukraina']: # bulgaria is very big
         size = 50
     
     image = Image.new('RGB', (width,height), color = 'white')

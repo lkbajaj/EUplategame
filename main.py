@@ -31,36 +31,6 @@ label.pack()
 
 # internal logic to creating images of plates
 def generate_plate():
-    # countries = ['Sweden','Ukraine','Estonia','Romania','Bulgaria','Malta','Bosnia','Belgium','Spain','Slovakia','Cyprus']
-    # country = random.choice(countries)
-
-    # plate = None
-    # # country = 'Slovakia'
-    # if country == 'Sweden':
-    #     plate = Sweden()
-    # elif country == 'Ukraine':
-    #     plate = Ukraine()
-    # elif country == 'Estonia':
-    #     plate = Estonia()
-    # elif country == 'Romania':
-    #     plate = Romania()
-    # elif country == 'Bosnia':
-    #     plate = Bosnia()
-    # elif country == 'Malta':
-    #     plate = Malta() 
-    # elif country == 'Belgium':
-    #     plate = Belgium()
-    # elif country == 'Spain':
-    #     plate = Spain()
-    # elif country == 'Slovakia':
-    #     plate = Slovakia()
-    # elif country == 'Bulgaria':
-    #     plate = Bulgaria()
-    # else:
-    #     plate = Cyprus()
-    
-
-# better way of doing this
 
     plate_options = {
         'Slovakia': Slovakia,

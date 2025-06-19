@@ -67,7 +67,7 @@ class Ukraine(LicensePlate):
     
     def dict_sw(self):
         countrySW = country_sw(self.country)
-        numberSW = self.plate_number[0:3] + number_sw(int(self.plate_number[3:6])) + self.plate_number[7:]
+        numberSW = self.plate_number[0:3] + number_sw(int(self.plate_number[3:7])) + self.plate_number[7:]
         return {'country':countrySW,
                 'number':numberSW}  
 
