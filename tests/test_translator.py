@@ -3,7 +3,7 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))) # chatGPT method to import outside of the directory
 
 from translator import country_sw, number_sw
-from plate import LicensePlate, Sweden, Ukraine, Romania, Estonia, Bulgaria, Malta, Belgium
+from plate import Sweden, Ukraine, Romania, Estonia, Bulgaria, Malta, Belgium, Spain
 
 def test_known_country():
     assert country_sw('Sweden') == 'Sverige'
@@ -37,6 +37,9 @@ def test_country_plateclass():
     country = belgianplate.country
     assert country_sw(country) == 'Belgien'
 
+    spanishplate = Spain()
+    country = spanishplate.country
+    assert country_sw(country) == 'Spanien'
 
 def test_unknown_country():
     assert country_sw('Mali') is None

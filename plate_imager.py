@@ -19,9 +19,7 @@ def back_matter(plate_number,dictsw):
     if country.lower() in smallplate_countries:
         width = SMALLPLATE_WIDTH
         size = 40
-    elif country.lower() == 'bulgarien': # bulgaria is very big
-        size = 50
-    elif country.lower() == 'bosnien och hercegovina':
+    elif country.lower() in ['bulgarien','bosnien och hercegovina','spanien']: # bulgaria is very big
         size = 50
     
     image = Image.new('RGB', (width,height), color = 'white')
@@ -163,6 +161,19 @@ def create_belgian_plate(number):
 
     position = (180,50)
     color = '#882329'
+
+    draw.text(position,number, font=font, fill=color)
+
+    image.save(f"plate-outputs/{number}-front.png")
+
+# Spain uses a font similar to DIN 1451: https://www.leewardpro.com/articles/licplatefonts/licplate-fonts-eur-2.html#:~:text=Spain,is%20modeled%20after%20DIN%201451.
+def create_spanish_plate(number):
+    image = Image.open("plate-templates/spain.png").convert('RGBA')
+    draw = ImageDraw.Draw(image)
+    font = ImageFont.truetype("fonts/DINMittelschriftStd.otf",size=220)
+
+    position = (230,50)
+    color = 'black'
 
     draw.text(position,number, font=font, fill=color)
 

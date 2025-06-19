@@ -91,3 +91,16 @@ def maltese_plate_gen():
         random_letter() + random_letter() + random_letter() + ' ' +
         random_number() + random_number() + random_number()
     )
+
+# Spanish plates use four digits a space and then a counter, which uses consonants 
+# B,C,D,F,G,H,J,K,L,M,N,P,R,S,T,V,W,X,Y,Z 
+# As of 2022, the series is up to beginning with M
+def spanish_plate_gen():
+    legalchars = 'BCDFGHJKLMNPRSTVWXYZ'
+    legalchars_beg = 'BCDFGHJKLM'
+
+    return (
+        random_number() + random_number() + random_number() + random_number() + ' ' +
+        random.choice(legalchars_beg) + random.choice(legalchars) + random.choice(legalchars)
+    )
+

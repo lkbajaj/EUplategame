@@ -4,12 +4,12 @@ import string
 from plate_imager import (
     create_swedish_plate, create_ukrainian_plate, create_romanian_plate, 
     create_estonian_plate, create_bulgarian_plate, create_bosnian_plate,
-    create_maltese_plate, create_belgian_plate
+    create_maltese_plate, create_belgian_plate, create_spanish_plate
 )
 from translator import country_sw, number_sw
 from plate_gen import (
     ukranian_plate_gen, romanian_plate_gen, bulgarian_plate_gen,
-    maltese_plate_gen
+    maltese_plate_gen, spanish_plate_gen
 )
 
 def random_letter():
@@ -205,4 +205,24 @@ class Belgium(LicensePlate):
 
         numberSW = number_sw(int(numarrays[0])) + ' ' + numarrays[1] + ' ' + number_sw(int(numarrays[2]))
         return {'country': countrySW,
+                'number': numberSW}
+    
+# Spain is a subclass of LicensePlate.
+# format is 0000 CCC comprising of consanants only. C is a series where the first letter is from A-M as of 2022.
+# https://en.wikipedia.org/wiki/Vehicle_registration_plates_of_Spain
+class Spain(LicensePlate):
+    def __init__(self):
+        country = 'Spain'
+        plate_number = spanish_plate_gen()
+
+        super().__init__(plate_number,country)
+
+    def image_plate(self):
+        create_spanish_plate(self.plate_number)
+    
+    def dict_sw(self):
+        countrySW = country_sw(self.country)
+        numberSW = number_sw(int(self.plate_number[:4])) + ' ' + self.plate_number[5:]
+
+        return {'country':countrySW,
                 'number': numberSW}
