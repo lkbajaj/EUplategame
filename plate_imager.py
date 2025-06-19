@@ -211,13 +211,20 @@ def create_cypriot_plate(number):
 
     draw.text(position,numbertemp, font=font, fill=color)
 
-    month = str(random.randint(1,12))
+    curyear = int(str(datetime.datetime.now().year)[-2:])
+    curmonth = datetime.datetime.now().month
+    year = random.randint(13,curyear)
+    month = random.randint(1,12)
+    if year == curyear:
+        if month > curmonth:
+            month = random.randint(1,curmonth)
+    month = str(month)
+
     if len(month) == 1:
         month = '0' + month
-    
-    year = random.randint(13,int(str(datetime.datetime.now().year)[-2:])) 
+
     registration_text = month + '\n'+ str(year)
-    position = (680,120)
+    position = (650,120)
     font = ImageFont.truetype("fonts/FE-FONT.TTF",size=50)
     draw.text(position,registration_text, font=font, fill=color)
 
