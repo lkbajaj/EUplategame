@@ -2,10 +2,10 @@
 import random
 import string
 from plate_imager import (
-    create_swedish_plate, create_ukrainian_plate, create_romanian_plate, 
-    create_estonian_plate, create_bulgarian_plate, create_bosnian_plate,
-    create_maltese_plate, create_belgian_plate, create_spanish_plate,
-    create_slovakian_plate, create_cypriot_plate
+    create_sweden_plate, create_ukraine_plate, create_romania_plate, 
+    create_estonia_plate, create_bulgaria_plate, create_bosnia_plate,
+    create_malta_plate, create_belgium_plate, create_spain_plate,
+    create_slovakia_plate, create_cyprus_plate
 )
 from translator import country_sw, number_sw
 from plate_gen import (
@@ -25,14 +25,26 @@ class LicensePlate:
         self.plate_number = plate_number
         self.country = country
         self.vehicle = 'car' # making every vehicle a car for now. May add support to bikes in the future.
+        self.dictsw = {
+            'country':country_sw(self.country),
+            'country_adj':country_sw(self.country,'adjective'),
+            'number':self.translate_number()
+        }
     
     # basic to-string method. Goal to create code that generates a picture of the plate eventually
     def __str__(self):
         return (f'number: {self.plate_number},country:{self.country},vehicle:{self.vehicle}')
     
-    # dict of all properties translated to Swedish. On every country to implement different translations
-    def dict_sw(self):
-        return {}
+    # just a template for now. Will override in subsequent country subclasses.
+    def translate_number(self):
+        return self.plate_number
+    
+    def image_plate(self):
+        func_name = f'create_{self.country.lower()}_plate'
+        if func_name in globals():
+            return globals()[func_name](self.plate_number)
+        else:
+            raise NotImplementedError(f"No image creation function named: {func_name}")
     
 # Sweden is a subclass of LicensePlate. I have included a constructor method for this purpose.
 # Swedish plates are comprised of three letters a space and three numbers e.g: WNF 864.
@@ -41,17 +53,12 @@ class Sweden(LicensePlate):
     def __init__(self):
         country = 'Sweden' # duh
         plate_number = random_letter() + random_letter() + random_letter() + " " + random_number() + random_number() + random_number()
+
         super().__init__(plate_number,country)
 
-    def image_plate(self):
-        create_swedish_plate(self.plate_number)
-
-    def dict_sw(self):
-        countrySW = country_sw(self.country)
-        numberSW = self.plate_number[0:4] + number_sw(int(self.plate_number[4:]))
-        return {'country':countrySW,
-                'number':numberSW}
-
+    def translate_number(self):
+        return self.plate_number[0:4] + number_sw(int(self.plate_number[4:]))
+  
 # Ukraine is another subclass of LicensePlate.
 # Ukranian plates are comprised of two letters, a space, four numbers, another space, and two letters e.g: AK 9265 AK
 # https://upload.wikimedia.org/wikipedia/commons/7/77/License_plate_of_Ukraine_2015.png 
@@ -60,17 +67,12 @@ class Ukraine(LicensePlate):
     def __init__(self):
         country = 'Ukraine'  
         plate_number = ukranian_plate_gen()
+        
         super().__init__(plate_number,country)
 
-    def image_plate(self):
-        create_ukrainian_plate(self.plate_number)
-    
-    def dict_sw(self):
-        countrySW = country_sw(self.country)
-        numberSW = self.plate_number[0:3] + number_sw(int(self.plate_number[3:7])) + self.plate_number[7:]
-        return {'country':countrySW,
-                'number':numberSW}  
-
+    def translate_number(self):
+        return self.plate_number[0:3] + number_sw(int(self.plate_number[3:7])) + self.plate_number[7:]
+        
 
 # Roamania is another subclass of LicensePlate.
 # Romanian plates are comprised of two letters, a space, two numbers, another space, and three letters. e.g: BN 18 CTL
@@ -81,15 +83,10 @@ class Romania(LicensePlate):
         plate_number = romanian_plate_gen()
         super().__init__(plate_number,country)
 
-    def image_plate(self):
-        create_romanian_plate(self.plate_number)
-    
-    def dict_sw(self):
-        countrySW = country_sw(self.country)
+    def translate_number(self):
         numarrays = self.plate_number.split()
-        numberSW = numarrays[0] + ' ' + number_sw(int(numarrays[1])) + ' ' + numarrays[2]
-        return {'country':countrySW,
-                'number':numberSW}
+        return numarrays[0] + ' ' + number_sw(int(numarrays[1])) + ' ' + numarrays[2]
+        
 
 
 
@@ -101,14 +98,9 @@ class Estonia(LicensePlate):
         plate_number = random_letter() + random_letter() + random_letter() + " " + random_number() + random_number() + random_number()
         super().__init__(plate_number,country)
 
-    def image_plate(self):
-        create_estonian_plate(self.plate_number)
-
-    def dict_sw(self): 
-        countrySW = country_sw(self.country)
-        numberSW = self.plate_number[0:4] + number_sw(int(self.plate_number[4:]))
-        return {'country': countrySW,
-                'number': numberSW}
+    def translate_number(self): 
+        return self.plate_number[0:4] + number_sw(int(self.plate_number[4:]))
+        
     
 # Bulgaria is another subclass of LicensePlate.
 # Bulgarian plates have a one to two letter regional code, followed by a four digit serial number, and a two letter code called a series
@@ -120,17 +112,10 @@ class Bulgaria(LicensePlate):
         plate_number = bulgarian_plate_gen()
         super().__init__(plate_number,country)
     
-    def image_plate(self):
-        create_bulgarian_plate(self.plate_number)
-    
-    def dict_sw(self):
-        countrySW = country_sw(self.country)
-        # print(countrySW)
+    def translate_number(self):
         numarrays =  self.plate_number.split()
-        numberSW = numarrays[0] + ' ' + number_sw(int(numarrays[1])) + ' ' + numarrays[2]
-        return {'country': countrySW,
-                'number': numberSW}
-    
+        return numarrays[0] + ' ' + number_sw(int(numarrays[1])) + ' ' + numarrays[2]
+        
 # Bosnia and Herzegovina (referred to as Bosnia for simplicity hereonafter) is another subclass of LicensePlate
 # Bosnian plates have five numbers and two letters in the order "X00-X-000". There are no regional codes.
 #  https://en.wikipedia.org/wiki/Vehicle_registration_plates_of_Bosnia_and_Herzegovina
@@ -146,15 +131,10 @@ class Bosnia(LicensePlate):
         
         super().__init__(plate_number, country)
     
-    def image_plate(self):
-        create_bosnian_plate(self.plate_number)
-    
-    def dict_sw(self):
-        countrySW = country_sw(self.country)
+    def translate_number(self):
         numarrays = self.plate_number.split('-')
-        numberSW = numarrays[0][0] + ' ' + number_sw(int(numarrays[0][1:])) + ' ' + numarrays[1] + ' ' + number_sw(int(numarrays[2]))
-        return {'country': countrySW,
-                'number': numberSW}
+        return numarrays[0][0] + ' ' + number_sw(int(numarrays[0][1:])) + ' ' + numarrays[1] + ' ' + number_sw(int(numarrays[2]))
+        
     
 # Malta is a subclass of LicensePlate.
 # Maltese plates have three letters and three numbers (ZZZ 999). There are no regional codes.
@@ -167,23 +147,14 @@ class Malta(LicensePlate):
 
         super().__init__(plate_number, country)
     
-    def image_plate(self):
-        create_maltese_plate(self.plate_number)
-    
-    def dict_sw(self):
-        countrySW = country_sw(self.country)
+    def translate_number(self):
         numarrays = self.plate_number.split()
 
         numberSW = ''
         if numarrays[0] == 'TAXI':
-            numberSW = numarrays[0] + ' ' +  number_sw(int(numarrays[1][:-1])) + ' ' + numarrays[-1]
-            return {'country': countrySW,
-                    'number': numberSW}
+            return numarrays[0] + ' ' +  number_sw(int(numarrays[1][:-1])) + ' ' + numarrays[-1]
         
-        numberSW = numarrays[0] + ' ' + number_sw(int(numarrays[1]))
-
-        return {'country': countrySW,
-                'number': numberSW}
+        return numarrays[0] + ' ' + number_sw(int(numarrays[1]))
 
 
 # Belgium is a subclass of LicensePlate
@@ -198,16 +169,9 @@ class Belgium(LicensePlate):
         
         super().__init__(plate_number,country)
     
-    def image_plate(self):
-        create_belgian_plate(self.plate_number)
-    
-    def dict_sw(self):
-        countrySW = country_sw(self.country)
+    def translate_number(self):
         numarrays = self.plate_number.split('-')
-
-        numberSW = number_sw(int(numarrays[0])) + ' ' + numarrays[1] + ' ' + number_sw(int(numarrays[2]))
-        return {'country': countrySW,
-                'number': numberSW}
+        return number_sw(int(numarrays[0])) + ' ' + numarrays[1] + ' ' + number_sw(int(numarrays[2]))
     
 # Spain is a subclass of LicensePlate.
 # format is 0000 CCC comprising of consanants only. C is a series where the first letter is from A-M as of 2022.
@@ -219,15 +183,8 @@ class Spain(LicensePlate):
 
         super().__init__(plate_number,country)
 
-    def image_plate(self):
-        create_spanish_plate(self.plate_number)
-    
-    def dict_sw(self):
-        countrySW = country_sw(self.country)
-        numberSW = number_sw(int(self.plate_number[:4])) + ' ' + self.plate_number[5:]
-
-        return {'country':countrySW,
-                'number': numberSW}
+    def translate_number(self):
+        return number_sw(int(self.plate_number[:4])) + ' ' + self.plate_number[5:]
 
 # Slovakia is a subclass of LicensePlate
 # the format is XX  000XX where the first two letters are a district code and per district
@@ -240,16 +197,10 @@ class Slovakia(LicensePlate):
 
         super().__init__(plate_number,country)
 
-    def image_plate(self):
-        create_slovakian_plate(self.plate_number)
-    
-    def dict_sw(self):
-        countrySW = country_sw(self.country)
+ 
+    def translate_number(self):
         numarrays = self.plate_number.split(' ')
-        numberSW = numarrays[0] + ' ' + number_sw(int(numarrays[1][0:3])) + ' ' + numarrays[1][3:]
-
-        return {'country':countrySW,
-                'number':numberSW}
+        return numarrays[0] + ' ' + number_sw(int(numarrays[1][0:3])) + ' ' + numarrays[1][3:]
     
 
 # Cyprus is a subclass of LicensePlate
@@ -262,17 +213,9 @@ class Cyprus(LicensePlate):
 
         super().__init__(plate_number,country)
     
-    def image_plate(self):
-        create_cypriot_plate(self.plate_number)
-
-    def dict_sw(self):
-        countrySW = country_sw(self.country)
+    def translate_number(self):
         numarrays = self.plate_number.split()
-        numberSW = numarrays[0] + ' ' + number_sw(int(numarrays[1])) 
-
-        return {'country':countrySW,
-                'number':numberSW}
-    
+        return numarrays[0] + ' ' + number_sw(int(numarrays[1])) 
 
     
     

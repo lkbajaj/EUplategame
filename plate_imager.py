@@ -13,6 +13,7 @@ smallplate_countries = ['sverige','estland']
 # creates the back end of the plates, as in the solutions to the flashcard
 def back_matter(plate_number,dictsw):
     country = dictsw['country']
+    countryadj = dictsw['country_adj']
     number = dictsw['number']
 
     width, height = LARGEPLATE_WIDTH, PLATE_HEIGHT
@@ -26,7 +27,7 @@ def back_matter(plate_number,dictsw):
     image = Image.new('RGB', (width,height), color = 'white')
     draw = ImageDraw.Draw(image)
 
-    text = f'land: {country}\nnummer: {number}'
+    text = f'detta är en {countryadj} bil.\nland: {country}\nnummer: {number}'
     font = ImageFont.truetype('fonts/Trebuchet MS.ttf', size=size)
     
     bbox = draw.textbbox((0,0),text,font=font)
@@ -40,7 +41,7 @@ def back_matter(plate_number,dictsw):
     image.save(f'plate-outputs/{plate_number}-back.png')
     
 # example create a Swedish plate
-def create_swedish_plate(number):
+def create_sweden_plate(number):
     image = Image.open("plate-templates/sweden.png").convert('RGBA')
     draw = ImageDraw.Draw(image)
     font = ImageFont.truetype("fonts/DINMittelschriftStd.otf",size=170)
@@ -56,7 +57,7 @@ def create_swedish_plate(number):
 
 # could not find a reputable source for what font Ukraine uses on their plates.
 # some Redditor mentioned that the closest font to it is Motor4F https://www.reddit.com/r/identifythisfont/comments/ug5e1o/hey_does_anyone_know_where_i_could_get_the/
-def create_ukrainian_plate(number):
+def create_ukraine_plate(number):
     image = Image.open("plate-templates/ukrainelg.png").convert('RGBA')
     draw = ImageDraw.Draw(image)
     font = ImageFont.truetype("fonts/Motor4F.otf",size=200)
@@ -72,7 +73,7 @@ def create_ukrainian_plate(number):
 
 # according to Wikipedia, Romania like Sweden uses the DIN 1451 Mittelschrift font
 # https://en.wikipedia.org/wiki/Vehicle_registration_plates_of_Romania
-def create_romanian_plate(number):
+def create_romania_plate(number):
     image = Image.open("plate-templates/romanialg.png").convert('RGBA')
     draw = ImageDraw.Draw(image)
     font = ImageFont.truetype("fonts/DINMittelschriftStd.otf",size=200)
@@ -90,7 +91,7 @@ def create_romanian_plate(number):
     # image.show()
 
 # I could not find any information for what font Estonia uses for their plates.  From what it looks like, I would suspect they are using the DIN font too.
-def create_estonian_plate(number):
+def create_estonia_plate(number):
     image = Image.open("plate-templates/estonia.png").convert('RGBA')
     draw = ImageDraw.Draw(image)
     font = ImageFont.truetype("fonts/DINMittelschriftStd.otf",size=180)
@@ -105,7 +106,7 @@ def create_estonian_plate(number):
     image.save(f"plate-outputs/{number}-front.png")
     # image.show()
 
-def create_bulgarian_plate(number):
+def create_bulgaria_plate(number):
     image = Image.open("plate-templates/bulgaria.png").convert('RGBA')
     draw = ImageDraw.Draw(image)
     font = ImageFont.truetype("fonts/Bulgarianmarijanovic-Regular.ttf",size=200)
@@ -121,7 +122,7 @@ def create_bulgarian_plate(number):
 # Bosnian plates use the FE-Schrift font, as seen by the white line in the 0 
 # https://en.wikipedia.org/wiki/European_vehicle_registration_plate#/media/File:License_plate_Bosnia_and_Herzegowina_2009.jpg
 
-def create_bosnian_plate(number):
+def create_bosnia_plate(number):
     image = Image.open("plate-templates/bosnia.png").convert('RGBA')
     draw = ImageDraw.Draw(image)
     font = ImageFont.truetype("fonts/FE-FONT.TTF",size=180)
@@ -135,7 +136,7 @@ def create_bosnian_plate(number):
     image.save(f"plate-outputs/{number}-front.png")
 
 # Maltese plates use FE-Schrift too
-def create_maltese_plate(number):
+def create_malta_plate(number):
     image = Image.open("plate-templates/malta.png").convert('RGBA')
     draw = ImageDraw.Draw(image)
     font = ImageFont.truetype("fonts/FE-FONT.TTF",size=200)
@@ -155,7 +156,7 @@ def create_maltese_plate(number):
 
 
 # Belgian plates have dark red text (#882329). They use a unique font that I do not want to pay for. The closest thing to it is  DIN1451
-def create_belgian_plate(number):
+def create_belgium_plate(number):
     image = Image.open("plate-templates/belgium.png").convert('RGBA')
     draw = ImageDraw.Draw(image)
     font = ImageFont.truetype("fonts/DINMittelschriftStd.otf",size=220)
@@ -168,7 +169,7 @@ def create_belgian_plate(number):
     image.save(f"plate-outputs/{number}-front.png")
 
 # Spain uses a font similar to DIN 1451: https://www.leewardpro.com/articles/licplatefonts/licplate-fonts-eur-2.html#:~:text=Spain,is%20modeled%20after%20DIN%201451.
-def create_spanish_plate(number):
+def create_spain_plate(number):
     image = Image.open("plate-templates/spain.png").convert('RGBA')
     draw = ImageDraw.Draw(image)
     font = ImageFont.truetype("fonts/DINMittelschriftStd.otf",size=220)
@@ -183,7 +184,7 @@ def create_spanish_plate(number):
 
 # Slovakia uses its own font that I am using a copy developed by /u/Marijanovic on Reddit.
 # The Slovakian plates have a seal of the country after the provincial code
-def create_slovakian_plate(number):
+def create_slovakia_plate(number):
     image = Image.open('plate-templates/slovakia.png').convert('RGBA')
     draw = ImageDraw.Draw(image)
     font = ImageFont.truetype('fonts/slovakiaMarijanovic.ttf',size=220)
@@ -199,7 +200,7 @@ def create_slovakian_plate(number):
 
 # Cyprus uses FE SCHRIFT. They also have the registration date on the plate in DIN font.
 # Since the new series of plates started in 2013 I will make the year from 2013-2025
-def create_cypriot_plate(number):
+def create_cyprus_plate(number):
     image = Image.open("plate-templates/cyprus.png").convert('RGBA')
     draw = ImageDraw.Draw(image)
     font = ImageFont.truetype("fonts/FE-FONT.TTF",size=200)
