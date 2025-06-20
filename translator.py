@@ -1,16 +1,15 @@
 import yaml
 
 # gives the Swedish translation of a country (string). List of supported countries read by swedish-translations/countries.yaml
-def country_sw(country):
+def country_sw(country,type='noun'):
     country = country.lower()
     with open('swedish-translations/countries.yaml') as file:
         data = yaml.safe_load(file)
-    
-    data = data['countries']
-    if country not in data:
-        return None 
-     
-    return data[country]
+        
+    if type not in list(data['countries'].keys()):
+        raise ValueError('Invalid type. Must be a \'noun\' or \'adjective\'.')
+ 
+    return data['countries'].get(type,{}).get(country)
 
 # supports up to four digit numbers. May handle more in the future if necessary
 def number_sw(num):
@@ -62,4 +61,4 @@ def number_sw(num):
 
     return returnstr
             
-            
+          

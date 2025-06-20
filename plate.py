@@ -27,6 +27,7 @@ class LicensePlate:
         self.vehicle = 'car' # making every vehicle a car for now. May add support to bikes in the future.
         self.dictsw = {
             'country':country_sw(self.country),
+            'country_adj':country_sw(self.country,'adjective'),
             'number':self.translate_number()
         }
     

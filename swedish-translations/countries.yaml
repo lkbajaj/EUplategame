@@ -1,13 +1,29 @@
 # swedish translations for countries, courtesy of Google Maps. YAML files are like JSON but more human readable. Parsed by pyyaml 
 countries:
-  sweden: Sverige
-  ukraine: Ukraina 
-  estonia: Estland
-  romania: Rumänien
-  bulgaria: Bulgarien
-  bosnia: Bosnien och Hercegovina
-  malta: Malta
-  belgium: Belgien
-  spain: Spanien
-  slovakia: Slovakien
-  cyprus: Cypern
+  noun:
+    sweden: Sverige
+    ukraine: Ukraina 
+    estonia: Estland
+    romania: Rumänien
+    bulgaria: Bulgarien
+    bosnia: Bosnien och Hercegovina
+    malta: Malta
+    belgium: Belgien
+    spain: Spanien
+    slovakia: Slovakien
+    cyprus: Cypern
+  adjective:
+    sweden: svensk
+    ukraine: ukrainsk
+    estonia: estnisk
+    romania: rumänsk
+    bulgaria: bulgarisk
+    bosnia: bosnisk 
+    malta: maltesisk 
+    belgium: belgisk
+    spain: spansk
+    slovakia: slovakisk
+    cyprus: cypriotisk
+
+
+

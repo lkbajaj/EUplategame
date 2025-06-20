@@ -13,6 +13,7 @@ smallplate_countries = ['sverige','estland']
 # creates the back end of the plates, as in the solutions to the flashcard
 def back_matter(plate_number,dictsw):
     country = dictsw['country']
+    countryadj = dictsw['country_adj']
     number = dictsw['number']
 
     width, height = LARGEPLATE_WIDTH, PLATE_HEIGHT
@@ -26,7 +27,7 @@ def back_matter(plate_number,dictsw):
     image = Image.new('RGB', (width,height), color = 'white')
     draw = ImageDraw.Draw(image)
 
-    text = f'land: {country}\nnummer: {number}'
+    text = f'detta är en {countryadj} bil.\nland: {country}\nnummer: {number}'
     font = ImageFont.truetype('fonts/Trebuchet MS.ttf', size=size)
     
     bbox = draw.textbbox((0,0),text,font=font)

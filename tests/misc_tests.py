@@ -9,7 +9,7 @@ import plate_imager
 with open('swedish-translations/countries.yaml') as file:
     data = yaml.safe_load(file)
 
-countries = list(data['countries'].keys())
+countries = list(data['countries']['noun'].keys())
 
 @pytest.mark.parametrize("country", countries)
 def test_create_plate_function_exists(country):
