@@ -45,7 +45,7 @@ def test_country_plateclass():
     country = cypriotplate.country
     assert country_sw(country) == 'Cypern'
 
-    assert cypriotplate.dictsw['country'] == 'Cypern'
+    assert cypriotplate.dictsw['country'] == 'Cypern' # yay new system works
 
 def test_unknown_country():
     assert country_sw('Mali') is None
